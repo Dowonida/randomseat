@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>
+    제목:{{data.title}}
+</h1>
+<hr>
+내용:
+<div class='content'>
+
+    {{data.content}}
+</div>
+{% if user.username == data.writer %}
+
+<form action="{% url 'articles:delete' data.pk %}" method='POST' >
+    {% csrf_token %}
+    <input type="submit" value='삭제'>
+    
+</form>
+
+<form action="{% url 'articles:update' data.pk%} " method='GET' >
+    {% csrf_token %}
+    <input type="submit" value='수정'>
+    
+</form>
+
+
+{% endif %}
+{% endblock content %}
