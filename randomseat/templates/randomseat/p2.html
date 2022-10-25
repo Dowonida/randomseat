@@ -108,7 +108,7 @@
       document.body.prepend(CC)
       document.body.prepend(RR)
       document.body.prepend(TT)
-      req()
+      //req()
     })
     {% comment %} 
     리롤:
@@ -127,7 +127,7 @@
     .done(function(recv) {
       console.log(recv)
       numTag.innerText=recv['my_num']
-      req()
+      //req()
       //alert( "second success" );
   }).fail(function(recv) {
     //alert( "error" );
@@ -155,7 +155,7 @@
     .done(function(recv) {
       console.log(recv)
       numTag.innerText=recv['my_num']
-      req()
+      //req()
       //alert( "second success" );
   }).fail(function(recv) {
     //alert( "error" );
@@ -163,7 +163,7 @@
   //alert( "finished" );
 });
     }
-    
+  setInterval(function(){req()},300)
 
 
 

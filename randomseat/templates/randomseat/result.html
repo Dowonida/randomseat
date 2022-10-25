@@ -9,39 +9,61 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
 <body>
+  <h3>
+
     <div class="container">
-        <div class="row">
-           <div class="col-2" id='seat1'>{{current.1}}</div>
-           <div class="col-2" id='seat2'>{{current.2}}</div>
-           <div class="col-2" id='seat3'>{{current.3}}</div>
-           <div class="col-2" id='seat4'>{{current.4}}</div>
-           <div class="col-2" id='seat5'>{{current.5}}</div>
-           <div class="col-2" id='seat6'>{{current.6}}</div>
-         </div>
-        <div class="row">
-          <div class="col-2" id='seat7'>{{current.7}}</div>
-          <div class="col-2" id='seat8'>{{current.8}}</div>
-          <div class="col-2" id='seat9'>{{current.9}}</div>
-          <div class="col-2" id='seat10'>{{current10.}}</div>
+      <div class="row">
+        <div class="col-2" id='seat1'>{{current.1}}</div>
+        <div class="col-2" id='seat2'>{{current.2}}</div>
+        <div class="col-2" id='seat3'>{{current.3}}</div>
+        <div class="col-2" id='seat4'>{{current.4}}</div>
+        <div class="col-2" id='seat5'>{{current.5}}</div>
+        <div class="col-2" id='seat6'>{{current.6}}</div>
+      </div>
+      <div class="row">
+        <div class="col-2" id='seat7'>{{current.7}}</div>
+        <div class="col-2" id='seat8'>{{current.8}}</div>
+        <div class="col-2" id='seat9'>{{current.9}}</div>
+          <div class="col-2" id='seat10'>{{current.10}}</div>
           <div class="col-2" id='seat11'>{{current.11}}</div>
           <div class="col-2" id='seat12'>{{current.12}}</div>
-         </div>
+        </div>
         <div class="row">
-           <div class="col-2" id='seat13'>{{current.13}}</div>
-           <div class="col-2" id='seat14'>{{current.14}}</div>
-           <div class="col-2" id='seat15'>{{current.15}}</div>
+          <div class="col-2" id='seat13'>{{current.13}}</div>
+          <div class="col-2" id='seat14'>{{current.14}}</div>
+          <div class="col-2" id='seat15'>{{current.15}}</div>
            <div class="col-2" id='seat16'>{{current.16}}</div>
            <div class="col-2" id='seat17'>{{current.17}}</div>
            <div class="col-2" id='seat18'>{{current.18}}</div>
-         </div>
-        <div class="row">
-           <div class="col-2" id='seat19'>{{current.19}}</div>
+          </div>
+          <div class="row">
+            <div class="col-2" id='seat19'>{{current.19}}</div>
            <div class="col-2" id='seat20'>{{current.20}}</div>
            <div class="col-2" id='seat21'>{{current.21}}</div>
            <div class="col-2" id='seat22'>{{current.22}}</div>
            <div class="col-2" id='seat23'>{{current.23}}</div>
            <div class="col-2" id='seat24'>{{current.24}}</div>
          </div>
-     </div>
+        </h3>
+        </div>
+        <script>
+          SEATS=document.querySelectorAll('.col-2')
+      req = function(){
+        $.get( "../sendinfo/", 
+        function(recvinfo) {
+          console.log(recvinfo['not'])
+          //console.log(recvinfo['current'][1])
+          for (x=1; x<25; x++){
+            SEATS[x-1].innerText=recvinfo['not'][x]
+          }
+
+          ;}
+        , 'json' /* xml, text, script, html */)
+        .done(function(recvinfo) { })
+        .fail(function(recvinfo) { })
+        .always(function(recvinfo) { });
+      }
+      setInterval(function(){req()},10000)
+     </script>
 </body>
 </html>

@@ -6,7 +6,7 @@ import json
 import time
 import tkinter
 #시작은 python manage.py runserver 192.168.202.117:8000   왼쪽은 ip주소 맞춰서 입력
-start_at=39#서버 시작시간을 적어주세요
+start_at=0#서버 시작시간을 적어주세요
 
 
 # Create your views here.
@@ -65,6 +65,8 @@ def jsoni(request):
 
 
 lotto=[i for i in range(1,25)]
+lotto.remove(19)
+lotto.remove(24)
 end={ i:'seat'+str(i) for i in range(1,25)}
 #end[1]='hihi'
 dic={}
@@ -95,8 +97,11 @@ def reroll(request):
 
 @api_view(['GET'])
 def sendinfo(request):
-
-    data={'current':end}
+    # print(dic)
+    # print(end)
+    # print(lotto)
+    data={'current':end,
+    'not':visited,}
     return JsonResponse(data)
 
 @api_view(['POST'])
