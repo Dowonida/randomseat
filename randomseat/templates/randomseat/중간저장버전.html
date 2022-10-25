@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+<body>
+  이름:<input type="text" id='이름'>
+  <h1>현재번호:
+    <p id='num'>
+    </p>
+  </h1>
+
+  <div class="container">
+     <div class="row">
+        <div class="col-2" id='seat1'>seat1</div>
+        <div class="col-2" id='seat2'>seat2</div>
+        <div class="col-2" id='seat3'>seat3</div>
+        <div class="col-2" id='seat4'>seat4</div>
+        <div class="col-2" id='seat5'>seat5</div>
+        <div class="col-2" id='seat6'>seat6</div>
+      </div>
+     <div class="row">
+       <div class="col-2" id='seat7'>seat7</div>
+       <div class="col-2" id='seat8'>seat8</div>
+       <div class="col-2" id='seat9'>seat9</div>
+       <div class="col-2" id='seat10'>seat10</div>
+       <div class="col-2" id='seat11'>seat11</div>
+       <div class="col-2" id='seat12'>seat12</div>
+      </div>
+     <div class="row">
+        <div class="col-2" id='seat13'>seat13</div>
+        <div class="col-2" id='seat14'>seat14</div>
+        <div class="col-2" id='seat15'>seat15</div>
+        <div class="col-2" id='seat16'>seat16</div>
+        <div class="col-2" id='seat17'>seat17</div>
+        <div class="col-2" id='seat18'>seat18</div>
+      </div>
+     <div class="row">
+        <div class="col-2" id='seat19'>seat19</div>
+        <div class="col-2" id='seat20'>seat20</div>
+        <div class="col-2" id='seat21'>seat21</div>
+        <div class="col-2" id='seat22'>seat22</div>
+        <div class="col-2" id='seat23'>seat23</div>
+        <div class="col-2" id='seat24'>seat24</div>
+      </div>
+  </div>
+
+  <script>
+    rand_1_24 = Math.floor(Math.random()*24)+1
+    numTag=document.querySelector('#num')
+    numTag.innerText=0
+    function reroll(){
+      rand_1_24 = Math.floor(Math.random()*24)+1
+      console.log(rand_1_24)
+      numTag.innerText=rand_1_24
+
+    }
+
+    submit = function(){
+      my_name= document.querySelector('#이름').value
+      console.log(my_name)
+      $.post( "json/", {
+        Name: my_name, seat_num: rand_1_24
+      }, function(recv) {
+        //alert( "success" );
+    }, 'json' /* xml, text, script, html */)
+    .done(function(recv) {
+      console.log(recv)
+      //alert( "second success" );
+  }).fail(function(recv) {
+    //alert( "error" );
+}).always(function(recv) {
+  //alert( "finished" );
+});
+    }
+
+
+
+    reroll_btn = document.createElement('input')
+    reroll_btn.setAttribute('type','submit')
+    reroll_btn.setAttribute('value','다시 뽑기')
+    reroll_btn.addEventListener('click',function(event){reroll()})
+    document.body.appendChild(reroll_btn)
+
+    submit_btn = document.createElement('input')
+    submit_btn.setAttribute('type','submit')
+    submit_btn.setAttribute('value','확정하기')
+    submit_btn.addEventListener('click',function(event){submit()})
+    document.body.appendChild(submit_btn)
+
+    // 이곳에 코드를 작성합니다.
+    aTag=document.createElement('a')
+    aTag.setAttribute('href','https://www.ssafy.com')
+    aTag.innerText='SSAFY'
+    aTag.addEventListener('click',function(evnet){
+      event.preventDefault()
+    })
+    
+    document.body.appendChild(aTag)
+
+
+
+
+  </script>
+</body>
+</html>

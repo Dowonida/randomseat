@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .red{
+            color: red;
+
+        }
+        .blue {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <button id='btn'> 클릭</button>
+    <input type="text">
+    <h1></h1>
+
+<script>
+    const btn = document.querySelector('#btn')
+    btn.addEventListener('click',function(event){
+        const h1Tag = document.querySelector('h1')
+        h1Tag.classList.toggle('blue')
+    })
+    const ipt = document.querySelector('input')
+    ipt.addEventListener('input', function(event){
+        const h1Tag= document.querySelector('h1')
+        h1Tag.innerText= event.target.value
+    })
+    const hTag = document.querySelector('h1')
+    hTag.addEventListener('copy', function(event){
+        event.preventDefault()
+        alert('복사금지')
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+</head>
+<body>
+  <enter>
+
+  이름:<input type="text" id='이름' placeholder='이름등록먼저'> <input type="submit" value='등록' id='등록'>
+  </enter>
+
+  <h1>현재번호:
+    <p id='num'>0
+    </p>
+  </h1>
+
+  <div class="container">
+     <div class="row">
+        <div class="col-2" id='seat1'>seat1</div>
+        <div class="col-2" id='seat2'>seat2</div>
+        <div class="col-2" id='seat3'>seat3</div>
+        <div class="col-2" id='seat4'>seat4</div>
+        <div class="col-2" id='seat5'>seat5</div>
+        <div class="col-2" id='seat6'>seat6</div>
+      </div>
+     <div class="row">
+       <div class="col-2" id='seat7'>seat7</div>
+       <div class="col-2" id='seat8'>seat8</div>
+       <div class="col-2" id='seat9'>seat9</div>
+       <div class="col-2" id='seat10'>seat10</div>
+       <div class="col-2" id='seat11'>seat11</div>
+       <div class="col-2" id='seat12'>seat12</div>
+      </div>
+     <div class="row">
+        <div class="col-2" id='seat13'>seat13</div>
+        <div class="col-2" id='seat14'>seat14</div>
+        <div class="col-2" id='seat15'>seat15</div>
+        <div class="col-2" id='seat16'>seat16</div>
+        <div class="col-2" id='seat17'>seat17</div>
+        <div class="col-2" id='seat18'>seat18</div>
+      </div>
+     <div class="row">
+        <div class="col-2" id='seat19'>seat19</div>
+        <div class="col-2" id='seat20'>seat20</div>
+        <div class="col-2" id='seat21'>seat21</div>
+        <div class="col-2" id='seat22'>seat22</div>
+        <div class="col-2" id='seat23'>seat23</div>
+        <div class="col-2" id='seat24'>seat24</div>
+      </div>
+  </div>
+
+  <script>
+    SEATS=document.querySelectorAll('.col-2')
+
+    {% comment %} 
+    자리현황 요청
+    {% endcomment %}
+    req = function(){
+      $.get( "sendinfo/", 
+      function(recvinfo) {
+        //console.log(recvinfo['current'])
+        //console.log(recvinfo['current'][1])
+        for (x=1; x<25; x++){
+          SEATS[x-1].innerText=recvinfo['current'][x]
+        }
+        
+       
+
+        ;}
+      , 'json' /* xml, text, script, html */)
+      .done(function(recvinfo) { })
+      .fail(function(recvinfo) { })
+      .always(function(recvinfo) { });
+
+
+    }
+    {% comment %} 
+    이름 전송:
+    이름을 입력하고 전송하면
+    이름 입력창, 이름 전송창 사라지고
+    이름이 등록됨 (클라이언트에)
+    {% endcomment %}
+    Etr= document.querySelector('#등록')
+    Etr.addEventListener('click',function(event){
+      event.preventDefault()
+      my_name= document.querySelector('#이름').value
+      document.body.removeChild(document.querySelector('enter'))
+
+      TT=document.createElement('h2')
+      TT.innerText='이름: '+my_name
+      RR=document.createElement('input')
+      RR.setAttribute('type','submit')
+      RR.setAttribute('value','다시 돌리기')
+      RR.addEventListener('click',function(event){
+        reroll()})
+      CC=document.createElement('input')
+      CC.setAttribute('type','submit')
+      CC.setAttribute('value','확정')
+      CC.addEventListener('click',function(event){
+        checkin()
+      })
+      document.body.prepend(CC)
+      document.body.prepend(RR)
+      document.body.prepend(TT)
+      req()
+    })
+    {% comment %} 
+    리롤:
+    리롤을 하면 이름을 포스트로 보냄
+    서버의 딕셔너리에서 확정되지 않은 자리 중에서 랜덤으로 숫자를 줌
+    그리고 현재 자리 상황을 전송해줌
+    클라이언트는 받은 숫자를 화면에 표시함
+    {% endcomment %}
+    numTag=document.querySelector('#num')
+    reroll = function(){
+      $.post( "reroll/", {
+        Name: my_name
+      }, function(recv) {
+        //alert( "success" );
+    }, 'json' /* xml, text, script, html */)
+    .done(function(recv) {
+      console.log(recv)
+      numTag.innerText=recv['my_num']
+      req()
+      //alert( "second success" );
+  }).fail(function(recv) {
+    //alert( "error" );
+}).always(function(recv) {
+  //alert( "finished" );
+});
+    }
+    
+    {% comment %} 
+    확정:
+    확정을 하면 이름과 번호를 포스트로 보냄
+    서버의 딕셔너리에 해당 번호가 확정되지 않았으면
+    그 자리에 넣음
+    그리고 현재 상황을 전송해줌
+    클라이언트는 전송 받은 자리를 송출만 하면 됨
+    이미 확정된 자리면 새로운 번호를 랜덤으로 줌 
+    {% endcomment %}
+
+    checkin = function(){
+      $.post( "checkin/", {
+        Name: my_name
+      }, function(recv) {
+        //alert( "success" );
+    }, 'json' /* xml, text, script, html */)
+    .done(function(recv) {
+      console.log(recv)
+      numTag.innerText=recv['my_num']
+      req()
+      //alert( "second success" );
+  }).fail(function(recv) {
+    //alert( "error" );
+}).always(function(recv) {
+  //alert( "finished" );
+});
+    }
+    
+
+
+
+
+
+
+  </script>
+</body>
+</html>
