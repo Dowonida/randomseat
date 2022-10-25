@@ -31,9 +31,7 @@ ALLOWED_HOSTS = ['172.30.1.59','192.168.202.117']
 # Application definition
 
 INSTALLED_APPS = [
-    'articles',
-    'accounts',
-    'movies',
+
     'randomseat',
  
     'rest_framework',
@@ -133,4 +131,4 @@ STATICFILES_DIRS= [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'accounts.User'
+#AUTH_USER_MODEL = 'accounts.User'
