@@ -11,7 +11,7 @@ end_at=1#서버 닫을 시간
 
 
 # Create your views here.
-member=['']*24
+member=['이름']*24
 
 memdic= [[0,f'image/{i}.jpg',i] for i in member]
 
